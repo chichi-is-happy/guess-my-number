@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, FlatList } from "react-native";
+import { StyleSheet, Text, View, Button, FlatList, Alert } from "react-native";
 import { useState, useEffect } from "react";
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 import { guessList, answerNumber } from "../recoilState/state";
@@ -37,6 +37,14 @@ const GamePage = ({ navigation }) => {
     ]);
   };
 
+  const showCorrectAnswerAlert = () => {
+    setMinNumber(1);
+    setMaxNumber(99);
+    Alert.alert("정답을 맞췄습니다", "게임 종료 페이지로 이동합니다", [
+      { text: "OK", onPress: () => navigation.navigate("GameOver") },
+    ]);
+  };
+
   useEffect(() => {
     console.log("minNumber updated: ", minNumber);
     console.log("maxNumber updated: ", maxNumber);
@@ -44,6 +52,10 @@ const GamePage = ({ navigation }) => {
 
   useEffect(() => {
     console.log("list updated: ", list);
+    if (answer === nowGuessData.number) {
+      console.log("정답, 다음 페이지로 이동");
+      showCorrectAnswerAlert();
+    }
   }, [list]);
 
   useEffect(() => {
@@ -55,8 +67,6 @@ const GamePage = ({ navigation }) => {
       <View style={styles.container}>
         <Text>내가 낸 숫자 : {answer}</Text>
 
-        {/* <Text>이번에 컴퓨터가 제시한 숫자 : {nowGuessData.number}</Text>
-        <Text>이번에 컴퓨터가 제시한 횟수 : {nowGuessData.count}</Text> */}
         <Button title="UP" onPress={numberToUp}></Button>
         <Button title="DOWN" onPress={numberToDown}></Button>
         <View style={styles.listContainer}>

@@ -13,10 +13,10 @@ const Home = ({ navigation }) => {
   const [answer, setAnswer] = useRecoilState(answerNumber);
 
   const onChangeAnswer = (inputNumber) => {
+    if (!/^\d+$/.test(inputNumber)) return; // 숫자 외의 값이 입력되면 함수 종료
+
     const parsedNumber = parseInt(inputNumber);
     setAnswer(parsedNumber);
-    console.log("answer: ", answer);
-    console.log("타입: ", typeof answer);
   };
 
   // 시작 버튼을 누르면 answer 값이 전역 answer state에 저장됨
@@ -60,6 +60,7 @@ const Home = ({ navigation }) => {
           style={styles.textInput}
           onChangeText={onChangeAnswer}
           keyboardType="numeric"
+          value={answer ? answer.toString() : ""}
         ></TextInput>
         <Text>번호를 입력해 주세요</Text>
         <Button title="게임 시작" onPress={gameStart} />

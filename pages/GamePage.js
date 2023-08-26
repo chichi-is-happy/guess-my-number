@@ -6,11 +6,27 @@ import { guessList, answerNumber } from "../recoilState/state";
 
 const GamePage = ({ navigation }) => {
   const [list, setList] = useRecoilState(guessList);
+  const [minNumber, setMinNumber] = useState(1);
+  const [maxNumber, setMaxNumber] = useState(99);
   const answer = useRecoilValue(answerNumber);
 
+  const nowGuessData = list.length && list[list.length - 1];
+
+  const numberToUp = () => {
+    const newMin = nowGuessData.number;
+    setMinNumber(newMin);
+    chooseNumber(newMin, maxNumber);
+  };
+  const numberToDown = () => {
+    const newMax = nowGuessData.number;
+    setMaxNumber(newMax);
+    chooseNumber(minNumber, newMax);
+  };
+
   // 컴퓨터가 Math.random()으로 함수 실행 시마다 숫자 랜덤 생성
-  const chooseNumber = () => {
-    const randomNumber = parseInt(Math.floor(Math.random() * 99) + 1);
+  const chooseNumber = (minNumber, maxNumber) => {
+    const randomNumber =
+      Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
     setList((prev) => [
       ...prev,
       {
@@ -21,11 +37,19 @@ const GamePage = ({ navigation }) => {
     ]);
   };
 
-  const nowGuessData = list.length && list[list.length - 1];
+  useEffect(() => {
+    console.log("minNumber updated: ", minNumber);
+    console.log("maxNumber updated: ", maxNumber);
+  }, [maxNumber, minNumber]);
 
   useEffect(() => {
     console.log("list updated: ", list);
   }, [list]);
+
+  useEffect(() => {
+    chooseNumber(minNumber, maxNumber);
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -33,7 +57,8 @@ const GamePage = ({ navigation }) => {
 
         {/* <Text>이번에 컴퓨터가 제시한 숫자 : {nowGuessData.number}</Text>
         <Text>이번에 컴퓨터가 제시한 횟수 : {nowGuessData.count}</Text> */}
-        <Button title="시작" onPress={chooseNumber}></Button>
+        <Button title="UP" onPress={numberToUp}></Button>
+        <Button title="DOWN" onPress={numberToDown}></Button>
         <View style={styles.listContainer}>
           <FlatList
             data={list}

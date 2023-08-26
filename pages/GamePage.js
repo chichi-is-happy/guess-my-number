@@ -16,11 +16,27 @@ const GamePage = ({ navigation }) => {
 
   const numberToUp = () => {
     const newMin = nowGuessData.number;
+    if (answer < newMin) {
+      Alert.alert(
+        "Miss!",
+        "정답이 휴대폰이 제시한 숫자보다 작습니다. 다시 골라주세요.",
+        [{ text: "OK" }]
+      );
+      return;
+    }
     setMinNumber(newMin);
     chooseNumber(newMin, maxNumber);
   };
   const numberToDown = () => {
     const newMax = nowGuessData.number;
+    if (answer > newMax) {
+      Alert.alert(
+        "Miss!",
+        "정답이 휴대폰이 제시한 숫자보다 큽니다. 다시 골라주세요.",
+        [{ text: "OK" }]
+      );
+      return;
+    }
     setMaxNumber(newMax);
     chooseNumber(minNumber, newMax);
   };

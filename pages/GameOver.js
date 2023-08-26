@@ -16,7 +16,7 @@ export default GameOver = ({ navigation }) => {
 
   const handleReset = () => {
     setList([]);
-    resetAnswerNum(""); // Recoil state 값을 초기화
+    resetAnswerNum("");
     navigation.navigate("Home");
   };
 

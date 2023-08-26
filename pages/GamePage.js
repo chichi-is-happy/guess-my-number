@@ -6,8 +6,10 @@ import { guessList, answerNumber } from "../recoilState/state";
 
 const GamePage = ({ navigation }) => {
   const [list, setList] = useRecoilState(guessList);
+  const [randomNumber, setRandomNumber] = useState(1);
   const [minNumber, setMinNumber] = useState(1);
   const [maxNumber, setMaxNumber] = useState(99);
+  const [excludeNumbers, setExcludeNumbers] = useState([]);
   const answer = useRecoilValue(answerNumber);
 
   const nowGuessData = list.length && list[list.length - 1];
@@ -23,18 +25,26 @@ const GamePage = ({ navigation }) => {
     chooseNumber(minNumber, newMax);
   };
 
-  // 컴퓨터가 Math.random()으로 함수 실행 시마다 숫자 랜덤 생성
   const chooseNumber = (minNumber, maxNumber) => {
-    const randomNumber =
-      Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+    let isDuplicate;
+    let newRandom;
+
+    do {
+      newRandom =
+        Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+      isDuplicate = excludeNumbers.includes(newRandom);
+    } while (isDuplicate);
+
     setList((prev) => [
       ...prev,
       {
-        number: randomNumber,
+        number: newRandom,
         key: Math.random().toString(),
         count: prev.length + 1,
       },
     ]);
+    setExcludeNumbers((prev) => [...prev, newRandom]);
+    setRandomNumber(newRandom);
   };
 
   const showCorrectAnswerAlert = () => {
@@ -44,6 +54,11 @@ const GamePage = ({ navigation }) => {
       { text: "OK", onPress: () => navigation.navigate("GameOver") },
     ]);
   };
+
+  useEffect(() => {
+    console.log("randomNumber: ", randomNumber);
+    console.log("excludeNumbers: ", excludeNumbers);
+  }, [randomNumber, excludeNumbers]);
 
   useEffect(() => {
     console.log("minNumber updated: ", minNumber);
@@ -75,7 +90,6 @@ const GamePage = ({ navigation }) => {
             renderItem={(itemData) => {
               return (
                 <>
-                  {/* <Text> itemData : {itemData} </Text> */}
                   <Text> 숫자 : {itemData.item.number} </Text>
                   <Text> 횟수 : {itemData.item.count} </Text>
                 </>

@@ -18,7 +18,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      {/* <View style={styles.container}> */}
+
       <RecoilRoot>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
@@ -27,7 +27,6 @@ export default function App() {
             <Stack.Screen name="GameOver" component={GameOver} />
           </Stack.Navigator>
         </NavigationContainer>
-        {/* </View> */}
       </RecoilRoot>
     </>
   );
@@ -35,8 +34,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#e9a4ae",
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

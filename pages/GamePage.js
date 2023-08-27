@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   listContainer: {
-    flex: 5,
+    flex: 3,
   },
 });
 

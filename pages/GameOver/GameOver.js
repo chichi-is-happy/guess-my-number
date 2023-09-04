@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
-import { guessList, answerNumber } from "../recoilState/state";
+import { guessList, answerNumber } from "../../recoilState/state";
 
 export default GameOver = ({ navigation }) => {
   const [list, setList] = useRecoilState(guessList);

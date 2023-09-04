@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, FlatList, Alert } from "react-native";
 import { useState, useEffect } from "react";
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
-import { guessList, answerNumber } from "../recoilState/state";
+import { guessList, answerNumber } from "../../recoilState/state";
 
 const GamePage = ({ navigation }) => {
   const [list, setList] = useRecoilState(guessList);

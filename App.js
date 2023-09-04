@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import Home from "./pages/Home";
-import GamePage from "./pages/GamePage";
-import GameOver from "./pages/GameOver";
+import Home from "./pages/Home/Home";
+import GamePage from "./pages/GamePage/GamePage";
+import GameOver from "./pages/GameOver/GameOver";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
